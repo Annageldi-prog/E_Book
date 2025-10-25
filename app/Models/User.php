@@ -24,9 +24,13 @@ class User extends Authenticatable
         'password',
     ];
 
-    public $timestamps = false;
 
-    protected $guarded = ['id'];
+    protected $guarded = [
+        'id',
+        'remember_token',
+        'created_at',
+        'updated_at',
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,8 +50,9 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
         ];
     }
 }
