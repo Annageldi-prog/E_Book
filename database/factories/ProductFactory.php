@@ -20,14 +20,14 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'title' => fake()->sentence(3),
-            'code' => fake()->countryCode(),
-            'description' => fake()->paragraph(),
-            'price' => fake()->randomFloat(2, 100, 1000),
-            'category_id' => 1,
-            'series_id' => 1,
-            'author_id' => 2,
+            'name' => $this->faker->sentence(2),
+            'title' => $this->faker->sentence(3),
+            'code' => strtoupper($this->faker->unique()->lexify('??')),
+            'description' => $this->faker->paragraph(),
+            'price' => $this->faker->randomFloat(2, 5, 500),
+            'category_id' => Category::inRandomOrder()->first()?->id ?? Category::factory(),
+            'author_id' => Author::inRandomOrder()->first()?->id ?? Author::factory(),
+            'series_id' => Series::inRandomOrder()->first()?->id ?? Series::factory(),
         ];
     }
 }

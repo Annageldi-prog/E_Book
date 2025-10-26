@@ -7,9 +7,6 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Series;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Database\Factories\AuthorFactory;
-use Database\Factories\SeriesFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,22 +16,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        User::factory()
+            ->create([
+                'name' => 'Annageldi',
+                'username' => 'anna123',
+                'password' => 'books2025',
+            ]);
+
+        $this->call(CategorySeeder::class);
+        $this->call(SeriesSeeder::class);
+
         User::factory(10)
             ->create();
 
-        Product::factory(5)
+        Author::factory(5)
             ->create();
 
-        $this->call([
-            SeriesSeeder::class,
-        ]);
+        Product::factory(20)
+            ->create();
 
-        $this->call([
-            CategorySeeder::class,
-        ]);
-
-        $this->call([
-            AuthorSeeder::class,
-        ]);
     }
 }
