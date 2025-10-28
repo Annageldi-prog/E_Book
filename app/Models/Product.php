@@ -8,10 +8,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
-    /** @use HasFactory<\Database\Factories\ProductFactory> */
+
     use HasFactory;
 
     public $timestamps = false;
+
+    protected $fillable = [
+        'name',
+        'title',
+        'code',
+        'description',
+        'price',
+        'category_id',
+        'author_id',
+        'series_id',
+        'image',
+    ];
 
     protected $guarded = ['id'];
 
@@ -24,6 +36,18 @@ class Product extends Model
     {
         return $this->belongsTo(Author::class);
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
 
     public function series(): BelongsTo
     {

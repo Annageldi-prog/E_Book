@@ -17,13 +17,6 @@ class Author extends Model
 
     protected $guarded = ['id'];
 
-
-
-    public function series(): HasMany
-    {
-        return $this->hasMany(Series::class);
-    }
-
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);

@@ -20,7 +20,6 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'username',
-        'email',
         'password',
     ];
 
@@ -31,6 +30,11 @@ class User extends Authenticatable
         'created_at',
         'updated_at',
     ];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

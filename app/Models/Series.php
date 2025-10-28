@@ -14,11 +14,6 @@ class Series extends Model
 
     protected $guarded = ['id'];
 
-    public function author(): BelongsTo
-    {
-        return $this->belongsTo(Author::class);
-    }
-
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
