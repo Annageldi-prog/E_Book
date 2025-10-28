@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-    <h2 class="text-center text-dark mb-4">Sebedim <i class="bi bi-cart-fill"></i></h2>
+    <h2 class="text-center text-dark mb-4">Sebedim <i class="bi bi-basket-fill"></i></h2>
     @if($orders->count() > 0)
         <div class="d-flex justify-content-center gap-3 mb-4">
             <form action="{{ route('my.books.deleteAll') }}" method="POST"
