@@ -34,7 +34,7 @@
                         <form action="{{ route('my.books.delete', $order->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">
+                            <button type="submit" class="btn btn-outline-danger">
                                 Pozmak
                             </button>
                         </form>

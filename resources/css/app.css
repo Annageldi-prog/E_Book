@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.btn-fixed {
+    min-width: 110px;      /* минимальная ширина */
+    white-space: nowrap;   /* запрет переноса */
+    padding-left: 0.9rem;  /* чуть больше внутреннего отступа */
+    padding-right: 0.9rem;
+    text-align: center;
+}

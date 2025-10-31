@@ -22,12 +22,12 @@
             <form action="{{ route('checkout.confirm') }}" method="POST" class="text-center">
                 @csrf
                 <button type="submit" class="btn btn-success w-100 fw-bold">
-                    ✅ Satyn almagy tassyklamak
+                     Satyn almagy tassyklamak
                 </button>
             </form>
 
             <div class="text-center mt-3">
-                <a href="{{ route('my.books') }}" class="btn btn-outline-light w-100">⬅ Sebede dolan</a>
+                <a href="{{ route('my.books') }}" class="btn btn-outline-light w-100">Sebede dolan</a>
             </div>
         </div>
     </div>

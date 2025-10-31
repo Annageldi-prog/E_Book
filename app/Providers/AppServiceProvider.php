@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,5 +25,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
             ->group(base_path('routes/web/admin.php'));
+
+        $locale = Session::get('locale', config('app.locale'));
+        App::setLocale($locale);
     }
 }

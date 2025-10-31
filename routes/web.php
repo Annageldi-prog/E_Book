@@ -6,6 +6,9 @@ use App\Http\Controllers\Web\Admin\FavoriteController;
 use App\Http\Controllers\Web\Admin\ReviewController;
 use App\Http\Middleware\WebMiddleware;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 
 // home
 Route::get('/', [HomeController::class, 'index'])
@@ -26,7 +29,19 @@ Route::delete('/my-books', [HomeController::class, 'deleteAllOrders'])->name('my
 Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
 Route::post('/checkout', [HomeController::class, 'confirmCheckout'])->name('checkout.confirm');
 
+Route::post('/books/{product}/review', [ReviewController::class, 'store'])->name('reviews.store');
+
 Route::middleware('auth')->group(function() {
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::post('/favorites/{product}', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
 });
+
+
+
+Route::get('/set-language/{lang}', function ($lang) {
+    $available = ['en', 'tm', 'ru'];
+    if (in_array($lang, $available)) {
+        session(['locale' => $lang]);
+    }
+    return redirect()->back();
+})->name('set.language');

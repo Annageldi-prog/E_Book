@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Author;
 use App\Models\Category;
+use App\Models\Review;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Series;
@@ -38,33 +40,42 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ProductSeeder::class,
         ]);
+        User::factory()->create();
 
         Order::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Ejegul',
-            'username' => 'ejegul123',
-            'password' => 'books2006',
-        ]);
+        Review::factory(30)->create();
 
-        User::factory()->create([
-            'name' => 'Ilmyrat',
-            'username' => 'ilmyrat123',
-            'password' => 'books2001',
-        ]);
+        User::firstOrCreate(
+            ['username' => 'ejegul123'],
+            [
+                'name' => 'Ejegul',
+                'password' => bcrypt('books2006'),
+            ]
+        );
 
-        User::factory()->create([
-            'name' => 'Ayjemal',
-            'username' => 'ayjemal123',
-            'password' => 'books2002',
-        ]);
+        User::firstOrCreate(
+            ['username' => 'ilmyrat123'],
+            [
+                'name' => 'Ilmyrat',
+                'password' => bcrypt('books2001'),
+            ]
+        );
 
-        User::factory()->create([
-            'name' => 'Annageldi',
-            'username' => 'anna123',
-            'password' => 'books2011',
-        ]);
+        User::firstOrCreate(
+            ['username' => 'ayjemal123'],
+            [
+                'name' => 'Ayjemal',
+                'password' => bcrypt('books2002'),
+            ]
+        );
 
-        User::factory(10)->create();
+        User::firstOrCreate(
+            ['username' => 'anna123'],
+            [
+                'name' => 'Annageldi',
+                'password' => bcrypt('books2011'),
+            ]
+        );
     }
 }

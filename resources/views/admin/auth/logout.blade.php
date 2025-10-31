@@ -6,11 +6,11 @@
     <div class="h2">Logout</div>
     <hr>
     <header>
-        <h1>Админ-панель</h1>
+        <h1>Logout</h1>
         @auth
-            <form method="POST" action="{{ route('admin.logout') }}">
+            <form method="POST" action="{{ route('admin.dashboard') }}">
                 @csrf
-                <button type="submit">Выйти</button>
+                <button type="submit">Çykmak</button>
             </form>
         @endauth
     </header>

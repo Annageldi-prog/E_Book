@@ -15,7 +15,7 @@ class Author extends Model
 
     public $timestamps = false;
 
-    protected $guarded = ['id'];
+        protected $guarded = ['id'];
 
     public function products(): HasMany
     {
