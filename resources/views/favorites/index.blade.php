@@ -13,11 +13,11 @@
                             {{-- Удалить из избранного --}}
                             <form action="{{ route('favorites.toggle', $fav->product->id) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-outline-danger btn-sm">Aýyr</button>
+                                <button type="submit" class="btn btn-outline-danger btn-sm">@lang('messages.delete')</button>
                             </form>
 
                             {{-- Подробнее --}}
-                            <a href="{{ route('book.show', $fav->product->id) }}" class="btn btn-outline-light btn-sm">Giňişleýin</a>
+                            <a href="{{ route('book.show', $fav->product->id) }}" class="btn btn-outline-light btn-sm">@lang('messages.details')</a>
                         </div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
         @empty
             <div class="col-12">
                 <div class="alert alert-info text-center">
-                    Saýlanan kitaplaryňyz ýok.
+                    @lang('messages.no_favorites')
                 </div>
             </div>
         @endforelse

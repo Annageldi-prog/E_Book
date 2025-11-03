@@ -103,20 +103,33 @@
             {{-- Список отзывов --}}
             @forelse($product->reviews as $review)
                 <div class="card bg-dark text-light mb-3 border border-secondary">
-                    <div class="card-body">
-                        <h6 class="card-title text-warning mb-1">
-                            {{ $review->user->name ?? 'Ulanyjy' }}
-                            <small class="text-light ms-2">{{ $review->created_at->format('d.m.Y H:i') }}</small>
-                        </h6>
+                    <div class="card-body d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="card-title text-warning mb-1">
+                                {{ $review->user->name ?? 'Ulanyjy' }}
+                                <small class="text-light ms-2">{{ $review->created_at->format('d.m.Y H:i') }}</small>
+                            </h6>
 
-                        {{-- ⭐ Звёзды --}}
-                        <div class="mb-2">
-                            @for ($i = 1; $i <= 5; $i++)
-                                <span class="{{ $i <= $review->rating ? 'text-warning' : 'text-secondary' }}">★</span>
-                            @endfor
+                            {{-- ⭐ Звёзды --}}
+                            <div class="mb-2">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <span class="{{ $i <= $review->rating ? 'text-warning' : 'text-secondary' }}">★</span>
+                                @endfor
+                            </div>
+
+                            <p class="card-text">{{ $review->comment }}</p>
                         </div>
 
-                        <p class="card-text">{{ $review->comment }}</p>
+                        {{-- 🔴 Кнопка удалить отзыв (только для автора или админа) --}}
+                        @if(auth()->id() === $review->user_id || auth()->user()->is_admin)
+                            <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" onsubmit="return confirm('@lang('messages.confirm_delete_review')');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    @lang('messages.delete')
+                                </button>
+                            </form>
+                        @endif
                     </div>
                 </div>
             @empty

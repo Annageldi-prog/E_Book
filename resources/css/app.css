@@ -9,3 +9,31 @@
     padding-right: 0.9rem;
     text-align: center;
 }
+/* Плавное появление сверху */
+@keyframes slideDown {
+    from {
+        transform: translate(-50%, -50px);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+/* Плавное исчезновение */
+@keyframes slideUp {
+    from {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+    to {
+        transform: translate(-50%, -40px);
+        opacity: 0;
+    }
+}
+
+/* Стиль для кастомного alert */
+#customAlert {
+    animation: slideDown 0.6s ease;
+}

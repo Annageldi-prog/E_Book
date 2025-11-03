@@ -29,7 +29,13 @@ Route::delete('/my-books', [HomeController::class, 'deleteAllOrders'])->name('my
 Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
 Route::post('/checkout', [HomeController::class, 'confirmCheckout'])->name('checkout.confirm');
 
-Route::post('/books/{product}/review', [ReviewController::class, 'store'])->name('reviews.store');
+Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])
+    ->name('reviews.store')
+    ->middleware('auth');
+
+Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])
+    ->name('reviews.destroy')
+    ->middleware('auth');
 
 Route::middleware('auth')->group(function() {
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
@@ -38,10 +44,11 @@ Route::middleware('auth')->group(function() {
 
 
 
-Route::get('/set-language/{lang}', function ($lang) {
-    $available = ['en', 'tm', 'ru'];
-    if (in_array($lang, $available)) {
+Route::post('/set-language', function (Request $request) {
+    $lang = $request->input('locale');
+    if (in_array($lang, ['tm', 'en', 'ru'])) {
         session(['locale' => $lang]);
+        app()->setLocale($lang);
     }
-    return redirect()->back();
+    return back();
 })->name('set.language');
