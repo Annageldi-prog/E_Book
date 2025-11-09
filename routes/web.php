@@ -6,11 +6,8 @@ use App\Http\Controllers\Web\Admin\FavoriteController;
 use App\Http\Controllers\Web\Admin\ReviewController;
 use App\Http\Middleware\WebMiddleware;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
-// home
 Route::get('/', [HomeController::class, 'index'])
     ->middleware(WebMiddleware::class)
     ->name('home');
@@ -52,3 +49,4 @@ Route::post('/set-language', function (Request $request) {
     }
     return back();
 })->name('set.language');
+
