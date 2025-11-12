@@ -29,7 +29,7 @@
             </form>
 
             <div class="text-center mt-3">
-                <a href="{{ route('my.books') }}" class="btn btn-outline-light w-100">
+                <a href="{{ route('my.books.index') }}" class="btn btn-outline-light w-100">
                     @lang('messages.return_to_cart')
                 </a>
             </div>

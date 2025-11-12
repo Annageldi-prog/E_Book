@@ -8,45 +8,74 @@ use App\Http\Middleware\WebMiddleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
-Route::get('/', [HomeController::class, 'index'])
-    ->middleware(WebMiddleware::class)
-    ->name('home');
+Route::middleware(WebMiddleware::class)->group(function () {
 
-Route::get('/books/{id}', [HomeController::class, 'show'])->name('book.show');
+    // Главная и книги
+    Route::controller(HomeController::class)->group(function () {
+        Route::get('/', 'index')->name('home');               // Главная страница
+        Route::get('/load-more', 'loadMore')->name('books.loadMore'); // AJAX "Показать ещё"
+        Route::get('/books/{id}', 'show')->name('book.show'); // Страница книги
+        Route::post('/books/{product}/buy', 'buy')->name('book.order'); // Добавление в корзину
+        Route::get('/books/{product}/buy', 'buyPage')->name('book.buy'); // Страница покупки
+    });
 
-Route::get('/books/{product}/buy', [HomeController::class, 'buyPage'])->name('book.buy');
-Route::post('/books/{product}/buy', [HomeController::class, 'buy'])->name('book.order');
+    // Категории
+    Route::controller(CategoryController::class)
+        ->prefix('category')
+        ->name('category.')
+        ->group(function () {
+            Route::get('{id}', 'show')->name('show');
+        });
 
-Route::get('/category/{id}', [CategoryController::class, 'show'])->name('category.show');
+    // Мои книги (название маршрута теперь my.books.index)
+    Route::controller(HomeController::class)
+        ->prefix('my-books')
+        ->name('my.books.')
+        ->middleware('auth')
+        ->group(function () {
+            Route::get('', 'myBooks')->name('index');             // my.books.index
+            Route::delete('{order}', 'deleteOrder')->name('delete');
+            Route::delete('', 'deleteAllOrders')->name('deleteAll');
+        });
 
-Route::get('/my-books', [HomeController::class, 'myBooks'])->name('my.books');
-Route::delete('/my-books/{order}', [HomeController::class, 'deleteOrder'])->name('my.books.delete');
-Route::delete('/my-books', [HomeController::class, 'deleteAllOrders'])->name('my.books.deleteAll');
+    // Checkout
+    Route::controller(HomeController::class)
+        ->prefix('checkout')
+        ->name('checkout.')
+        ->middleware('auth')
+        ->group(function () {
+            Route::get('', 'checkout')->name('index');           // checkout.index
+            Route::post('', 'confirmCheckout')->name('confirm'); // checkout.confirm
+        });
 
-Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
-Route::post('/checkout', [HomeController::class, 'confirmCheckout'])->name('checkout.confirm');
+    // Отзывы
+    Route::controller(ReviewController::class)
+        ->prefix('products/{product}/reviews')
+        ->name('reviews.')
+        ->middleware('auth')
+        ->group(function () {
+            Route::post('', 'store')->name('store');
+            Route::delete('/{review}', 'destroy')->name('destroy');
+        });
 
-Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])
-    ->name('reviews.store')
-    ->middleware('auth');
+    // Любимые
+    Route::controller(FavoriteController::class)
+        ->prefix('favorites')
+        ->name('favorites.')
+        ->middleware('auth')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            Route::post('{product}', 'toggle')->name('toggle');
+        });
 
-Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])
-    ->name('reviews.destroy')
-    ->middleware('auth');
+    // Локализация
+    Route::post('/set-language', function (Request $request) {
+        $lang = $request->input('locale');
+        if (in_array($lang, ['tm', 'en', 'ru'])) {
+            session(['locale' => $lang]);
+            app()->setLocale($lang);
+        }
+        return back();
+    })->name('set.language');
 
-Route::middleware('auth')->group(function() {
-    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
-    Route::post('/favorites/{product}', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
 });
-
-
-
-Route::post('/set-language', function (Request $request) {
-    $lang = $request->input('locale');
-    if (in_array($lang, ['tm', 'en', 'ru'])) {
-        session(['locale' => $lang]);
-        app()->setLocale($lang);
-    }
-    return back();
-})->name('set.language');
-
