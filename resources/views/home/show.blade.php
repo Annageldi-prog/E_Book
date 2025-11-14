@@ -20,8 +20,7 @@
                 <p><strong>@lang('messages.author'):</strong> {{ $product->author->name ?? 'Belli däl' }}</p>
                 <p><strong>@lang('messages.category'):</strong> {{ $product->category->name ?? 'Belli däl' }}</p>
                 <p><strong>@lang('messages.series'):</strong> {{ $product->series->name ?? 'Ýok' }}</p>
-                <p><strong>@lang('messages.price'):</strong> <span class="text-warning">{{ $product->price }} TMT</span>
-                </p>
+                <p><strong>@lang('messages.price'):</strong> <span class="text-warning">{{ $product->price }} TMT</span></p>
 
                 {{-- Средний рейтинг --}}
                 @php $avg = round($product->reviews->avg('rating'), 1); @endphp
@@ -53,15 +52,15 @@
                     <form action="{{ route('favorites.toggle', $product->id) }}" method="POST" class="flex-fill">
                         @csrf
                         <button type="submit" class="btn btn-fx-fill w-100">
-            <span>
-                @auth
-                    {{ (auth()->user()->favorites ?? collect())->contains('product_id', $product->id)
-                        ? __('messages.added_to_favorites')
-                        : __('messages.favorite') }}
-                @else
-                    @lang('messages.favorite')
-                @endauth
-            </span>
+                        <span>
+                            @auth
+                                {{ (auth()->user()->favorites ?? collect())->contains('product_id', $product->id)
+                                    ? __('messages.added_to_favorites')
+                                    : __('messages.favorite') }}
+                            @else
+                                @lang('messages.favorite')
+                            @endauth
+                        </span>
                         </button>
                     </form>
                 </div>
@@ -92,7 +91,7 @@
                         <textarea name="comment" class="form-control" rows="3"
                                   placeholder="@lang('messages.add_comment')..." required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-gradient">@lang('messages.add_comment')</button>
+                        <button type="submit" class="btn btn-fx-fill"><span>@lang('messages.add_comment')</span></button>
                     </form>
                 @else
                     <div class="alert alert-secondary">@lang('messages.already_reviewed')</div>
@@ -124,12 +123,13 @@
                         </div>
 
                         @if(auth()->id() === $review->user_id || auth()->user()->is_admin)
-                            <form action="{{ route('reviews.destroy', $review->id) }}" method="POST"
+                            <form action="{{ route('reviews.destroy', [$product->id, $review->id]) }}" method="POST"
                                   onsubmit="return confirm('@lang('messages.confirm_delete_review')');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit"
-                                        class="btn btn-outline-danger btn-sm">@lang('messages.delete')</button>
+                                <button type="submit" class="btn btn-delete-gradient">
+                                    <span>@lang('messages.delete')</span>
+                                </button>
                             </form>
                         @endif
                     </div>
@@ -141,7 +141,6 @@
     </div>
 
     <script>
-        // Выбор рейтинга в форме
         document.addEventListener('DOMContentLoaded', () => {
             const stars = document.querySelectorAll('.star-rating .star');
             const input = document.querySelector('.star-rating input[name="rating"]');
@@ -164,15 +163,61 @@
     </script>
 
     <style>
+        .btn-delete-gradient {
+            position: relative;
+            display: inline-block;
+            padding: 0.35rem 0.9rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #ff0018; /* начальный цвет */
+            border: 2px solid #f5061d;
+            background: transparent;
+            overflow: hidden;
+            transition: color 0.4s, border-color 0.4s;
+            border-radius: 0.4rem;
+            cursor: pointer;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .btn-delete-gradient span {
+            position: relative;
+            z-index: 1;
+            transition: color 0.4s;
+        }
+
+        .btn-delete-gradient::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(135deg, #414040, #fd080b);
+            z-index: 0;
+            transition: width 0.4s ease;
+        }
+
+        .btn-delete-gradient:hover::before {
+            width: 100%;
+        }
+
+        .btn-delete-gradient:hover {
+            color: #ffffff;
+            border-color: #ff4d4f;
+        }
+
+
+
+
         /* Кнопка корзины */
         .btn-gradient {
-            background: linear-gradient(135deg, #ffc107, #ffb300);
+            background: linear-gradient(135deg, #ff0734, #ffb300);
             border: none;
             color: #1e1e2f;
             font-weight: 600;
             transition: all 0.3s;
         }
-
         .btn-gradient:hover {
             background: linear-gradient(135deg, #ffb300, #ff8c00);
             color: #fff;
@@ -193,14 +238,12 @@
             border-radius: 0.4rem;
             cursor: pointer;
             text-align: center;
-            min-width: 140px; /* фиксированная минимальная длина */
+            min-width: 140px;
         }
-
         .btn-fx-fill span {
             position: relative;
             z-index: 1;
         }
-
         .btn-fx-fill::before {
             content: '';
             position: absolute;
@@ -208,23 +251,16 @@
             top: 0;
             width: 0%;
             height: 100%;
-            background: linear-gradient(135deg, #ffc107, #ff8c00);
+            background: linear-gradient(135deg, #ff071c, #ffc000);
             z-index: 0;
             transition: width 0.4s ease;
         }
-
         .btn-fx-fill:hover::before {
             width: 100%;
         }
-
         .btn-fx-fill:hover {
-            color: #1e1e2f;
-            border-color: #ffb300;
-        }
-        .btn-fx-fill span {
-            position: relative;
-            z-index: 1;
-            transition: color 0.4s;
+            color: #fdfdfd;
+            border-color: #d36b09;
         }
 
         /* Звёзды рейтинга */
@@ -233,14 +269,12 @@
             display: flex;
             gap: 4px;
         }
-
         .star {
             color: #555;
             position: relative;
             cursor: pointer;
             transition: all 0.3s ease;
         }
-
         .star::before {
             content: '★';
             position: absolute;
@@ -254,12 +288,10 @@
             -webkit-text-fill-color: transparent;
             transition: width 0.3s ease;
         }
-
         .star.hover::before,
         .star.selected::before {
             width: 100%;
         }
-
         .star:hover {
             transform: scale(1.2);
         }
@@ -268,7 +300,6 @@
         .card-img-top {
             transition: transform 0.4s;
         }
-
         .card-img-top:hover {
             transform: scale(1.05);
         }

@@ -58,6 +58,8 @@ Route::middleware(WebMiddleware::class)->group(function () {
             Route::delete('/{review}', 'destroy')->name('destroy');
         });
 
+
+
     // Любимые
     Route::controller(FavoriteController::class)
         ->prefix('favorites')

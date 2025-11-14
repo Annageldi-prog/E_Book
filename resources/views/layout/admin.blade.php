@@ -58,7 +58,6 @@
 <header class="custom-navbar p-2 shadow-sm">
     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap">
         <a href="{{ route('home') }}" class="d-flex align-items-center text-white text-decoration-none mb-2 mb-md-0">
-            <i class="bi bi-book-fill h3 pe-2 text-light"></i>
             <span class="h4 mb-0">Admin Panel</span>
         </a>
 
