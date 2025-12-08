@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('client.layout.app')
 @section('title', 'Saýlanan kitaplar')
 
 @section('content')
@@ -17,7 +17,8 @@
                         <h5 class="card-title text-center text-light">{{ $fav->product->name }}</h5>
                         <div class="mt-auto d-flex justify-content-between">
                             {{-- Удалить из избранного --}}
-                            <form action="{{ route('favorites.toggle', $fav->product->id) }}" method="POST" class="w-100">
+                            <form action="{{ route('favorites.toggle', $fav->product->id) }}" method="POST"
+                                  class="w-100">
                                 @csrf
                                 <button type="submit" class="btn btn-outline-danger btn-sm w-100 btn-delete-gradient">
                                     <span>@lang('messages.delete') </span>

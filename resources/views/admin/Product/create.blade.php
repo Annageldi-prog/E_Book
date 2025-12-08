@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('client.layout.app')
 @section('content')
     <h1>Kitaplar</h1>
     <div class="mb-3">

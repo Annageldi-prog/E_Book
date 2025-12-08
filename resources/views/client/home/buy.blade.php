@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('client.layout.app')
 
 @section('content')
     <div class="container py-5">
@@ -8,7 +8,7 @@
                 <p><strong>Author:</strong> {{ $product->author->name ?? '—' }}</p>
                 <p><strong>Price:</strong> {{ $product->price }} TMT</p>
 
-                <form action="{{ route('book.order', $product->id) }}" method="POST">
+                <form action="{{ route('buy.page', $product->id) }}" method="POST">
                     @csrf
                     <button class="btn btn-success">Satyn almak</button>
                 </form>

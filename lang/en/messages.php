@@ -69,5 +69,5 @@ return [
     'dashboard' => 'Dashboard',
     'products' => 'Products',
     'cart_empty' => 'Your cart is empty',
-    'dashboard_intro' => 'Welcome to the E-Books admin panel! Here you can manage books, authors, categories, and series.',
+    'dashboard_intro' => 'Welcome to the E-Books web_admin panel! Here you can manage books, authors, categories, and series.',
 ];

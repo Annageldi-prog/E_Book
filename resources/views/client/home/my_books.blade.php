@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('client.layout.app')
 
 @section('title', __('messages.cart'))
 
@@ -8,7 +8,8 @@
     @if($orders->count() > 0)
         <div class="d-flex justify-content-center gap-3 mb-4 flex-wrap">
             {{-- Delete All --}}
-            <form action="{{ route('my.books.deleteAll') }}" method="POST" onsubmit="return confirm('@lang('messages.confirm_delete_all')');" class="w-auto">
+            <form action="{{ route('mybooks.deleteAll') }}" method="POST"
+                  onsubmit="return confirm('@lang('messages.confirm_delete_all')');" class="w-auto">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-delete-gradient fw-bold w-100">
@@ -17,7 +18,8 @@
             </form>
 
             {{-- Checkout --}}
-            <a href="{{ route('checkout.index') }}" class="btn btn-check-gradient fw-bold" style="min-width: 120px; padding: 0.35rem 0.8rem;">
+            <a href="{{ route('checkout.index') }}" class="btn btn-check-gradient fw-bold"
+               style="min-width: 120px; padding: 0.35rem 0.8rem;">
                 <span>@lang('messages.checkout')</span>
             </a>
         </div>
@@ -62,7 +64,8 @@
                         <p class="mb-1"><strong>@lang('messages.code'):</strong> {{ $order->product->code }}</p>
                         <p class="mb-3"><strong>@lang('messages.quantity'):</strong> {{ $order->quantity }}</p>
 
-                        <form action="{{ route('my.books.delete', $order->id) }}" method="POST" class="mt-auto w-100">
+                        <form action="{{ route('mybooks.delete', $order->id) }}" method="POST"
+                              class="mt-auto w-100">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-delete-gradient fw-bold w-100">
@@ -99,15 +102,18 @@
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
         }
+
         .cart-card:hover {
             transform: translateY(-5px) scale(1.02);
             box-shadow: 0 0 25px rgba(255, 193, 7, 0.5);
         }
+
         .book-img {
             border-top-left-radius: 1rem;
             border-top-right-radius: 1rem;
             transition: transform 0.5s ease;
         }
+
         .cart-card:hover .book-img {
             transform: scale(1.05);
         }
@@ -132,17 +138,27 @@
             border: 2px solid #129d04;
             background: transparent;
         }
+
         .btn-check-gradient::before {
             content: '';
             position: absolute;
-            left: 0; top: 0;
-            width: 0%; height: 100%;
+            left: 0;
+            top: 0;
+            width: 0%;
+            height: 100%;
             background: linear-gradient(135deg, #414040, #129d04);
             z-index: 0;
             transition: width 0.4s ease;
         }
-        .btn-check-gradient:hover::before { width: 100%; }
-        .btn-check-gradient:hover { color: rgba(248, 248, 248, 0.99); border-color: #129d04; }
+
+        .btn-check-gradient:hover::before {
+            width: 100%;
+        }
+
+        .btn-check-gradient:hover {
+            color: rgba(248, 248, 248, 0.99);
+            border-color: #129d04;
+        }
 
         /* Delete кнопка */
         .btn-delete-gradient {
@@ -150,17 +166,27 @@
             border: 2px solid #f5061d;
             background: transparent;
         }
+
         .btn-delete-gradient::before {
             content: '';
             position: absolute;
-            left: 0; top: 0;
-            width: 0%; height: 100%;
+            left: 0;
+            top: 0;
+            width: 0%;
+            height: 100%;
             background: linear-gradient(135deg, #414040, #fd080b);
             z-index: 0;
             transition: width 0.4s ease;
         }
-        .btn-delete-gradient:hover::before { width: 100%; }
-        .btn-delete-gradient:hover { color: #fff; border-color: #ff4d4f; }
+
+        .btn-delete-gradient:hover::before {
+            width: 100%;
+        }
+
+        .btn-delete-gradient:hover {
+            color: #fff;
+            border-color: #ff4d4f;
+        }
 
         /* Текст поверх градиента */
         .btn-check-gradient span,

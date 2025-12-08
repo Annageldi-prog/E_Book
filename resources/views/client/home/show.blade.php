@@ -1,11 +1,11 @@
-@extends('layout.app')
+@extends('client.layout.app')
 
 @section('title', $product->name)
 
 @section('content')
     <div class="container mt-4">
         <div class="row g-4">
-            {{-- 📘 Информация о книге --}}
+            {{-- show book--}}
             <div class="col-md-4">
                 <div class="card shadow-lg rounded-4 border border-secondary bg-dark">
                     <img src="{{ asset($product->image ?? 'img/image-1.jpg') }}"
@@ -20,9 +20,10 @@
                 <p><strong>@lang('messages.author'):</strong> {{ $product->author->name ?? 'Belli däl' }}</p>
                 <p><strong>@lang('messages.category'):</strong> {{ $product->category->name ?? 'Belli däl' }}</p>
                 <p><strong>@lang('messages.series'):</strong> {{ $product->series->name ?? 'Ýok' }}</p>
-                <p><strong>@lang('messages.price'):</strong> <span class="text-warning">{{ $product->price }} TMT</span></p>
+                <p><strong>@lang('messages.price'):</strong> <span class="text-warning">{{ $product->price }} TMT</span>
+                </p>
 
-                {{-- Средний рейтинг --}}
+
                 @php $avg = round($product->reviews->avg('rating'), 1); @endphp
                 <div class="mb-3">
                     <strong>@lang('messages.average_rating'):</strong>
@@ -30,7 +31,7 @@
                         @for ($i = 1; $i <= 5; $i++)
                             <span class="{{ $i <= $avg ? 'text-warning' : 'text-secondary' }}">★</span>
                         @endfor
-                        <span class="ms-1 text-muted">({{ $avg }}/5)</span>
+                        <span class="ms-1 text-light">({{ $avg }}/5)</span>
                     @else
                         <span class="text-muted">@lang('messages.no_comments')</span>
                     @endif
@@ -38,17 +39,16 @@
 
                 <p class="mt-3">{{ $product->description }}</p>
 
-                {{-- Кнопки действий --}}
                 <div class="d-flex gap-2 mt-4">
-                    {{-- Добавить в корзину --}}
-                    <form action="{{ route('book.order', $product->id) }}" method="POST" class="flex-fill">
+                    {{-- add cart --}}
+                    <form action="{{ route('buy.page', $product->id) }}" method="POST" class="flex-fill">
                         @csrf
                         <button type="submit" class="btn btn-fx-fill w-100">
                             <span>@lang('messages.add_to_cart')</span>
                         </button>
                     </form>
 
-                    {{-- Добавить в избранное --}}
+                    {{-- add favorite --}}
                     <form action="{{ route('favorites.toggle', $product->id) }}" method="POST" class="flex-fill">
                         @csrf
                         <button type="submit" class="btn btn-fx-fill w-100">
@@ -69,7 +69,7 @@
 
         <hr class="border-secondary mt-5">
 
-        {{-- 💬 Отзывы --}}
+        {{-- review --}}
         <div class="mt-4">
             <h4 class="text-light mb-3">@lang('messages.comments')</h4>
 
@@ -91,7 +91,8 @@
                         <textarea name="comment" class="form-control" rows="3"
                                   placeholder="@lang('messages.add_comment')..." required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-fx-fill"><span>@lang('messages.add_comment')</span></button>
+                        <button type="submit" class="btn btn-fx-fill"><span>@lang('messages.add_comment')</span>
+                        </button>
                     </form>
                 @else
                     <div class="alert alert-secondary">@lang('messages.already_reviewed')</div>
@@ -103,14 +104,14 @@
                 </div>
             @endauth
 
-            {{-- Список отзывов --}}
+            {{-- rating --}}
             @forelse($product->reviews as $review)
                 <div class="card bg-dark text-light mb-3 border border-secondary">
                     <div class="card-body d-flex justify-content-between align-items-start">
                         <div>
                             <h6 class="card-title text-warning mb-1">
                                 {{ $review->user->name ?? 'Ulanyjy' }}
-                                <small class="text-light ms-2">{{ $review->created_at->format('d.m.Y H:i') }}</small>
+                                <small class="text-light ms-2">{{ $review->created_at->format('d.m.Y') }}</small>
                             </h6>
 
                             <div class="review-stars mb-2 d-flex">
@@ -123,7 +124,8 @@
                         </div>
 
                         @if(auth()->id() === $review->user_id || auth()->user()->is_admin)
-                            <form action="{{ route('reviews.destroy', [$product->id, $review->id]) }}" method="POST"
+                            <form action="{{ route('reviews.destroy', [$product->id, $review->id]) }}"
+                                  method="POST"
                                   onsubmit="return confirm('@lang('messages.confirm_delete_review')');">
                                 @csrf
                                 @method('DELETE')
@@ -208,8 +210,6 @@
         }
 
 
-
-
         /* Кнопка корзины */
         .btn-gradient {
             background: linear-gradient(135deg, #ff0734, #ffb300);
@@ -218,6 +218,7 @@
             font-weight: 600;
             transition: all 0.3s;
         }
+
         .btn-gradient:hover {
             background: linear-gradient(135deg, #ffb300, #ff8c00);
             color: #fff;
@@ -240,10 +241,12 @@
             text-align: center;
             min-width: 140px;
         }
+
         .btn-fx-fill span {
             position: relative;
             z-index: 1;
         }
+
         .btn-fx-fill::before {
             content: '';
             position: absolute;
@@ -255,9 +258,11 @@
             z-index: 0;
             transition: width 0.4s ease;
         }
+
         .btn-fx-fill:hover::before {
             width: 100%;
         }
+
         .btn-fx-fill:hover {
             color: #fdfdfd;
             border-color: #d36b09;
@@ -269,12 +274,14 @@
             display: flex;
             gap: 4px;
         }
+
         .star {
             color: #555;
             position: relative;
             cursor: pointer;
             transition: all 0.3s ease;
         }
+
         .star::before {
             content: '★';
             position: absolute;
@@ -288,10 +295,12 @@
             -webkit-text-fill-color: transparent;
             transition: width 0.3s ease;
         }
+
         .star.hover::before,
         .star.selected::before {
             width: 100%;
         }
+
         .star:hover {
             transform: scale(1.2);
         }
@@ -300,6 +309,7 @@
         .card-img-top {
             transition: transform 0.4s;
         }
+
         .card-img-top:hover {
             transform: scale(1.05);
         }

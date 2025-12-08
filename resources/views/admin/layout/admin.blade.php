@@ -55,14 +55,14 @@
 <body>
 
 {{-- Navbar --}}
-<header class="custom-navbar p-2 shadow-sm">
+<header class="custom-navbar p-3 shadow-sm">
     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap">
         <a href="{{ route('home') }}" class="d-flex align-items-center text-white text-decoration-none mb-2 mb-md-0">
             <span class="h4 mb-0">Admin Panel</span>
         </a>
 
         <ul class="nav me-auto ms-4 mb-2 mb-md-0">
-            <li><a href="{{ route('home') }}" class="nav-link px-3 fw-semibold">@lang('messages.home')</a></li>
+            <li><a href="{{ route('home') }}" class="nav-link px-3 fw-semibold">Product</a></li>
         </ul>
 
         <div class="d-flex align-items-center gap-2">

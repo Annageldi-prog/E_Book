@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('client.layout.app')
 
 @section('title', __('messages.checkout'))
 
@@ -33,7 +33,7 @@
                 </button>
             </form>
 
-            <a href="{{ route('my.books.index') }}" class="btn btn-return-gradient fw-bold w-100">
+            <a href="{{ route('mybooks.index') }}" class="btn btn-return-gradient fw-bold w-100">
                 @lang('messages.return_to_cart')
             </a>
         </div>
