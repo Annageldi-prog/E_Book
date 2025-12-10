@@ -23,9 +23,6 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Route::middleware('web')
-            ->group(base_path('routes/web_admin/admin.php'));
-
         $locale = Session::get('locale', config('app.locale'));
         App::setLocale($locale);
     }

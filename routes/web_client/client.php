@@ -30,17 +30,18 @@ Route::prefix('category')
         Route::get('{id}', 'show')->name('show');
     });
 
-Route::controller(BuyController::class)
-    ->middleware('auth')
-    ->prefix('buy')
+// УБРАНО middleware('auth')
+// Покупка доступна без логина
+Route::prefix('buy')
     ->name('buy.')
+    ->controller(BuyController::class)
     ->group(function () {
         Route::get('{product}', 'buyPage')->name('page');
         Route::post('{product}', 'buy')->name('store');
     });
 
-Route::middleware('auth')
-    ->prefix('checkout')
+// УБРАНО auth
+Route::prefix('checkout')
     ->name('checkout.')
     ->controller(CheckoutController::class)
     ->group(function () {
@@ -48,8 +49,8 @@ Route::middleware('auth')
         Route::post('', 'confirmCheckout')->name('confirm');
     });
 
-Route::middleware('auth')
-    ->prefix('my-books')
+// УБРАНО auth
+Route::prefix('my-books')
     ->name('mybooks.')
     ->controller(MyBooksController::class)
     ->group(function () {
@@ -58,34 +59,34 @@ Route::middleware('auth')
         Route::delete('', 'deleteAllOrders')->name('deleteAll');
     });
 
-Route::middleware('auth')
-    ->controller(FavoriteController::class)
-    ->prefix('favorites')
+// УБРАНО auth
+Route::prefix('favorites')
     ->name('favorites.')
+    ->controller(FavoriteController::class)
     ->group(function () {
         Route::get('', 'index')->name('index');
         Route::post('{product}', 'toggle')->name('toggle');
     });
 
-Route::middleware('auth')
-    ->controller(ReviewController::class)
-    ->prefix('reviews/{product}')
+// УБРАНО auth
+Route::prefix('reviews/{product}')
     ->name('reviews.')
+    ->controller(ReviewController::class)
     ->group(function () {
         Route::post('', 'store')->name('store');
         Route::delete('{review}', 'destroy')->name('destroy');
     });
 
-Route::controller(AuthorController::class)
-    ->prefix('authors')
+Route::prefix('authors')
     ->name('authors.')
+    ->controller(AuthorController::class)
     ->group(function () {
         Route::get('', 'index')->name('index');
     });
 
-Route::controller(SeriesController::class)
-    ->prefix('series')
+Route::prefix('series')
     ->name('series.')
+    ->controller(SeriesController::class)
     ->group(function () {
         Route::get('', 'index')->name('index');
     });

@@ -123,7 +123,7 @@
                             <p class="card-text">{{ $review->comment }}</p>
                         </div>
 
-                        @if(auth()->id() === $review->user_id || auth()->user()->is_admin)
+                        @if(auth()->check() && (auth()->id() === $review->user_id || auth()->user()->is_admin))
                             <form action="{{ route('reviews.destroy', [$product->id, $review->id]) }}"
                                   method="POST"
                                   onsubmit="return confirm('@lang('messages.confirm_delete_review')');">

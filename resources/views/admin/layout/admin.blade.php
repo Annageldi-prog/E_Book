@@ -57,14 +57,23 @@
 {{-- Navbar --}}
 <header class="custom-navbar p-3 shadow-sm">
     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap">
-        <a href="{{ route('home') }}" class="d-flex align-items-center text-white text-decoration-none mb-2 mb-md-0">
+
+        {{-- Left side --}}
+        <a href="{{ route('admin.dashboard') }}" class="d-flex align-items-center text-white text-decoration-none mb-2 mb-md-0">
             <span class="h4 mb-0">Admin Panel</span>
         </a>
 
-        <ul class="nav me-auto ms-4 mb-2 mb-md-0">
-            <li><a href="{{ route('home') }}" class="nav-link px-3 fw-semibold">Product</a></li>
-        </ul>
+        {{-- Center menu --}}
+        @auth
+            <nav class="d-flex align-items-center gap-3">
+                <a href="{{ route('admin.authors.index') }}" class="text-decoration-none">Authors</a>
+                <a href="{{ route('admin.category.index') }}" class="text-decoration-none">Categories</a>
+                <a href="{{ route('admin.products.index') }}" class="text-decoration-none">Products</a>
+                <a href="{{ route('admin.series.index') }}" class="text-decoration-none">Series</a>
+            </nav>
+        @endauth
 
+        {{-- Right side --}}
         <div class="d-flex align-items-center gap-2">
             @auth
                 <form action="{{ route('admin.logout') }}" method="POST" class="d-inline">
@@ -75,7 +84,7 @@
                 <a href="{{ route('admin.login') }}" class="btn btn-outline-light btn-sm">@lang('messages.login')</a>
             @endauth
 
-            {{-- Языковой селектор --}}
+            {{-- Language selector --}}
             <form action="{{ route('set.language') }}" method="POST">
                 @csrf
                 <select name="locale" class="form-select form-select-sm bg-dark text-light border-light"
@@ -86,10 +95,11 @@
                 </select>
             </form>
         </div>
+
     </div>
 </header>
 
-{{-- Контент --}}
+{{-- Content --}}
 <div class="container-xl">
     @yield('content')
 </div>

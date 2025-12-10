@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('code');
             $table->text('description')->nullable();
             $table->double('price')->default(0);
+            $table->timestamps();
         });
     }
 
