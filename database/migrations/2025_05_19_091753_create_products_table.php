@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('category_id')->index();
             $table->foreignId('author_id')->index();
             $table->foreignId('series_id')->index();
-            $table->string('title');
             $table->string('code');
             $table->text('description')->nullable();
             $table->double('price')->default(0);

@@ -16,14 +16,15 @@ class Product extends Model
     protected $fillable = [
         'name',
         'title',
-        'code',
-        'description',
-        'price',
         'category_id',
         'author_id',
         'series_id',
+        'price',
+        'description',
         'image',
+        'code'
     ];
+
 
     protected $guarded = ['id'];
 
