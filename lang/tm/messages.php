@@ -79,4 +79,9 @@ return [
 
     'not_allowed' => 'Bu amaly ýerine ýetirmäge rugsadyňyz ýok.',
     'delete' => 'Pozmak',
+    'add' =>  'Goşmak',
+    'current_image' => 'Hazirki surat',
+    'admin_panel' => 'Admin Panel',
+    'no_authors' => 'Awtor tapylmady',
+    'name' => 'Ady'
 ];

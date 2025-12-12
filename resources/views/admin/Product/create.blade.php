@@ -1,28 +1,29 @@
 @extends('admin.layout.admin')
 
-@section('title', 'Add New Product')
+@section('title', __('messages.add_product'))
 
 @section('content')
     <div class="container-lg py-4">
 
-        <h2 class="text-warning mb-4 fw-bold">Add New Product</h2>
+        <h2 class="text-warning mb-4 fw-bold">{{ __('messages.add_product') }}</h2>
 
         <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data"
               class="bg-dark p-4 rounded shadow form-box">
+
             @csrf
 
             {{-- Product Title --}}
             <div class="mb-3">
-                <label for="name" class="form-label text-light">Product Name</label>
+                <label for="name" class="form-label text-light">{{ __('messages.product_name') }}</label>
                 <input type="text" name="name" id="name" class="form-control"
                        value="{{ old('name') }}" required>
             </div>
 
             {{-- Category --}}
             <div class="mb-3">
-                <label for="category_id" class="form-label text-light">Category</label>
+                <label for="category_id" class="form-label text-light">{{ __('messages.category') }}</label>
                 <select name="category_id" id="category_id" class="form-select" required>
-                    <option value="">Select category</option>
+                    <option value="">{{ __('messages.select_category') }}</option>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
                             {{ $category->name }}
@@ -33,9 +34,9 @@
 
             {{-- Author --}}
             <div class="mb-3">
-                <label for="author_id" class="form-label text-light">Author</label>
+                <label for="author_id" class="form-label text-light">{{ __('messages.author') }}</label>
                 <select name="author_id" id="author_id" class="form-select" required>
-                    <option value="">Select author</option>
+                    <option value="">{{ __('messages.select_author') }}</option>
                     @foreach($authors as $author)
                         <option value="{{ $author->id }}" {{ old('author_id') == $author->id ? 'selected' : '' }}>
                             {{ $author->name }}
@@ -46,9 +47,9 @@
 
             {{-- Series --}}
             <div class="mb-3">
-                <label for="series_id" class="form-label text-light">Series</label>
+                <label for="series_id" class="form-label text-light">{{ __('messages.series') }}</label>
                 <select name="series_id" id="series_id" class="form-select" required>
-                    <option value="">Select series</option>
+                    <option value="">{{ __('messages.select_series') }}</option>
                     @foreach($series as $serie)
                         <option value="{{ $serie->id }}" {{ old('series_id') == $serie->id ? 'selected' : '' }}>
                             {{ $serie->name }}
@@ -59,33 +60,35 @@
 
             {{-- Price --}}
             <div class="mb-3">
-                <label for="price" class="form-label text-light">Price (USD)</label>
+                <label for="price" class="form-label text-light">{{ __('messages.price') }}</label>
                 <input type="number" step="0.01" name="price" id="price" class="form-control"
-                       placeholder="Enter price"
                        value="{{ old('price') }}" required>
             </div>
 
+            {{-- Code --}}
             <div class="mb-3">
-                <label for="code" class="form-label text-light">Code</label>
+                <label for="code" class="form-label text-light">{{ __('messages.code') }}</label>
                 <input type="text" name="code" id="code" class="form-control"
                        value="{{ old('code') }}" required>
             </div>
 
-
             {{-- Description --}}
             <div class="mb-3">
-                <label for="description" class="form-label text-light">Description</label>
+                <label for="description" class="form-label text-light">{{ __('messages.description') }}</label>
                 <textarea name="description" id="description" rows="4" class="form-control"
-                          placeholder="Write product description...">{{ old('description') }}</textarea>
+                          placeholder="{{ __('messages.description') }}">{{ old('description') }}</textarea>
             </div>
 
             {{-- Image --}}
             <div class="mb-3">
-                <label for="image" class="form-label text-light">Product Image</label>
+                <label for="image" class="form-label text-light">{{ __('messages.product_image') }}</label>
                 <input type="file" name="image" id="image" class="form-control">
             </div>
 
-            <button type="submit" class="btn btn-warning w-100 mt-3 btn-glow">Save Product</button>
+            <button type="submit" class="btn btn-warning w-100 mt-3 btn-glow">
+                {{ __('messages.add_product') }}
+            </button>
+
         </form>
     </div>
 
@@ -115,4 +118,5 @@
             box-shadow: 0 0 8px #ffc107;
         }
     </style>
+
 @endsection

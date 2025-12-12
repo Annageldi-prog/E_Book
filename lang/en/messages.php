@@ -106,4 +106,10 @@ return [
 
     // Access
     'not_allowed' => 'You are not allowed to perform this action.',
+    'add' => 'Add',
+    'name' => 'Name',
+    'current_image' => 'Current Image',
+    'no_authors' => 'No authors found',
+    'admin_panel' => 'Admin Panel'
+
 ];

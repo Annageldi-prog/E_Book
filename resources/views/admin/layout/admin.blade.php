@@ -60,16 +60,16 @@
 
         {{-- Left side --}}
         <a href="{{ route('admin.dashboard') }}" class="d-flex align-items-center text-white text-decoration-none mb-2 mb-md-0">
-            <span class="h4 mb-0">Admin Panel</span>
+            <span class="h4 mb-0">@lang('messages.admin_panel')</span>
         </a>
 
         {{-- Center menu --}}
         @auth
             <nav class="d-flex align-items-center gap-3">
-                <a href="{{ route('admin.authors.index') }}" class="text-decoration-none">Authors</a>
-                <a href="{{ route('admin.category.index') }}" class="text-decoration-none">Categories</a>
-                <a href="{{ route('admin.products.index') }}" class="text-decoration-none">Products</a>
-                <a href="{{ route('admin.series.index') }}" class="text-decoration-none">Series</a>
+                <a href="{{ route('admin.authors.index') }}" class="text-decoration-none">@lang('messages.authors')</a>
+                <a href="{{ route('admin.category.index') }}" class="text-decoration-none">@lang('messages.categories')</a>
+                <a href="{{ route('admin.products.index') }}" class="text-decoration-none">@lang('messages.products')</a>
+                <a href="{{ route('admin.series.index') }}" class="text-decoration-none">@lang('messages.series')</a>
             </nav>
         @endauth
 

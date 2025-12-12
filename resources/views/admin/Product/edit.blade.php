@@ -1,11 +1,11 @@
 @extends('admin.layout.admin')
 
-@section('title', 'Edit Product')
+@section('title', __('messages.edit_product'))
 
 @section('content')
     <div class="container-lg py-4">
 
-        <h2 class="text-warning mb-4 fw-bold">Edit Product</h2>
+        <h2 class="text-warning mb-4 fw-bold">@lang('messages.edit_product')</h2>
 
         <form action="{{ route('admin.products.update', $product->id) }}" method="POST"
               enctype="multipart/form-data"
@@ -15,14 +15,14 @@
 
             {{-- Product Name --}}
             <div class="mb-3">
-                <label class="form-label text-light">Product Name</label>
+                <label class="form-label text-light">@lang('messages.product_name')</label>
                 <input type="text" name="name" class="form-control"
                        value="{{ old('name', $product->name) }}" required>
             </div>
 
             {{-- Category --}}
             <div class="mb-3">
-                <label class="form-label text-light">Category</label>
+                <label class="form-label text-light">@lang('messages.category')</label>
                 <select name="category_id" class="form-select" required>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}"
@@ -35,7 +35,7 @@
 
             {{-- Author --}}
             <div class="mb-3">
-                <label class="form-label text-light">Author</label>
+                <label class="form-label text-light">@lang('messages.author')</label>
                 <select name="author_id" class="form-select" required>
                     @foreach($authors as $author)
                         <option value="{{ $author->id }}"
@@ -48,7 +48,7 @@
 
             {{-- Series --}}
             <div class="mb-3">
-                <label class="form-label text-light">Series</label>
+                <label class="form-label text-light">@lang('messages.series')</label>
                 <select name="series_id" class="form-select" required>
                     @foreach($series as $serie)
                         <option value="{{ $serie->id }}"
@@ -61,32 +61,34 @@
 
             {{-- Code --}}
             <div class="mb-3">
-                <label class="form-label text-light">Code</label>
+                <label class="form-label text-light">@lang('messages.code')</label>
                 <input type="text" name="code" class="form-control"
                        value="{{ old('code', $product->code) }}" required>
             </div>
 
             {{-- Price --}}
             <div class="mb-3">
-                <label class="form-label text-light">Price (USD)</label>
+                <label class="form-label text-light">@lang('messages.price')</label>
                 <input type="number" step="0.01" name="price" class="form-control"
                        value="{{ old('price', $product->price) }}" required>
             </div>
 
             {{-- Description --}}
             <div class="mb-3">
-                <label class="form-label text-light">Description</label>
-                <textarea name="description" rows="4" class="form-control">{{ old('description', $product->description) }}</textarea>
+                <label class="form-label text-light">@lang('messages.description')</label>
+                <textarea name="description" rows="4" class="form-control">
+                    {{ old('description', $product->description) }}
+                </textarea>
             </div>
 
             {{-- Image --}}
             <div class="mb-3">
-                <label class="form-label text-light">Product Image</label>
+                <label class="form-label text-light">@lang('messages.product_image')</label>
                 <input type="file" name="image" class="form-control">
 
                 @if($product->image)
                     <div class="mt-3">
-                        <p class="text-light mb-1">Current Image:</p>
+                        <p class="text-light mb-1">@lang('messages.current_image'):</p>
                         <img src="{{ asset('storage/' . $product->image) }}"
                              alt="product image"
                              style="max-width: 120px; border-radius: 6px;">
@@ -95,7 +97,7 @@
             </div>
 
             <button type="submit" class="btn btn-warning w-100 mt-3 btn-glow">
-                Update Product
+                @lang('messages.update_product')
             </button>
         </form>
     </div>
